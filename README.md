@@ -1,6 +1,11 @@
 # vision_ucb_frontend
 
-A new Flutter project.
+
+# App design prototype
+https://www.figma.com/file/2kcpgFZhENqBIRLEuOieF9/NOVIS-PRO?node-id=0%3A1
+
+Designed using figma.
+Found at https://www.figma.com/
 
 ## Getting Started
 
