@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'NOVISPRO',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'NOVISPRO'),
     );
   }
 }
@@ -44,68 +44,134 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    double statusBarHeight = MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            Flexible(
+              child: FractionallySizedBox(
+                widthFactor: 1.0,
+                heightFactor: 1.0,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Flexible(
+                      child: FractionallySizedBox(
+                        widthFactor: 1.0,
+                        heightFactor: 1.0,
+                        child: Container(
+                          margin: EdgeInsets.only(top: statusBarHeight),
+                          decoration: myBoxDecorationInfo(),
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: FractionallySizedBox(
+                        widthFactor: 1.0,
+                        heightFactor: 1.0,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Flexible(
+                              child: FractionallySizedBox(
+                                widthFactor: 1.0,
+                                heightFactor: 1.0,
+                                child: Container(
+                                  decoration: myBoxDecorationPaper(),
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              child: FractionallySizedBox(
+                                widthFactor: 1.0,
+                                heightFactor: 1.0,
+                                child: Container(
+                                  decoration: myBoxDecorationWatch(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            Flexible(
+              child: FractionallySizedBox(
+                widthFactor: 1.0,
+                heightFactor: 1.0,
+                child: Container(
+                  decoration: myBoxDecorationEye(),
+                ),
+              ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  BoxDecoration myBoxDecorationInfo() {
+    return BoxDecoration(
+      image: DecorationImage(
+          image: new AssetImage(
+              'img/info.png'),
+          fit: BoxFit.none,
+        ),
+      color: Color(0xFFC2DFE3),
+      border: Border.all(
+        color: Color(0xFF2050AC), //                   <--- border color
+        width: 5.0,
+      ),
+    );
+  }
+  BoxDecoration myBoxDecorationPaper() {
+    return BoxDecoration(
+      image: DecorationImage(
+          image: new AssetImage(
+              'img/papel 1.png'),
+          fit: BoxFit.none,
+        ),
+      color: Color(0xFFA0D2DB),
+      border: Border.all(
+        color: Color(0xFF2050AC), //                   <--- border color
+        width: 5.0,
+      ),
+    );
+  }
+  BoxDecoration myBoxDecorationWatch() {
+    return BoxDecoration(
+      image: DecorationImage(
+          image: new AssetImage(
+              'img/reloj 1.png'),
+          fit: BoxFit.none,
+        ),
+      color: Color(0xFFD36582),
+      border: Border.all(
+        color: Color(0xFF2050AC), //                   <--- border color
+        width: 5.0,
+      ),
+    );
+  }
+  BoxDecoration myBoxDecorationEye() {
+    return BoxDecoration(
+      image: DecorationImage(
+          image: new AssetImage(
+              'img/testigo 1.png'),
+          fit: BoxFit.none,
+        ),
+      color: Color(0xFF6F9BB4),
+      border: Border.all(
+        color: Color(0xFF2050AC), //                   <--- border color
+        width: 5.0,
+      ),
     );
   }
 }
