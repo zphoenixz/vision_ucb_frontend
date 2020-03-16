@@ -15,7 +15,6 @@ class _CameraViewState extends State<CameraView> {
     //return Scaffold with all containers
     return Scaffold(
       body: Container(
-        color: Colors.green,
         margin: EdgeInsets.only(top: statusBarHeight),
         child: Column(
           children: <Widget>[
@@ -25,14 +24,27 @@ class _CameraViewState extends State<CameraView> {
                 children: <Widget>[
                   Flexible(
                     flex: 2,
-                    child: Container(
-                      decoration: myBoxDecoration(),
+                    child: new InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        decoration: myBoxDecorationHome(),
+                      ),
                     ),
                   ),
                   Flexible(
                     flex: 8,
-                    child: Container(
-                      decoration: myBoxDecorationEye(),
+                    child: new InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Hero(
+                        tag: 'eye',
+                        child: Container(
+                          decoration: myBoxDecorationEye(),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -49,19 +61,25 @@ class _CameraViewState extends State<CameraView> {
                 children: <Widget>[
                   Flexible(
                       flex: 4,
-                      child: Container(
-                        decoration: myBoxDecorationPaper(),
-                      )),
+                      child: Hero(
+                          tag: 'paper',
+                          child: Container(
+                            decoration: myBoxDecorationPaper(),
+                          ))),
                   Flexible(
                       flex: 3,
                       child: Container(
                         decoration: myBoxDecorationInfo(),
                       )),
                   Flexible(
-                      flex: 4,
+                    flex: 4,
+                    child: Hero(
+                      tag: 'watch',
                       child: Container(
                         decoration: myBoxDecorationWatch(),
-                      )),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -79,13 +97,13 @@ class _CameraViewState extends State<CameraView> {
       ),
     );
   }
+
   BoxDecoration myBoxDecorationInfo() {
     return BoxDecoration(
       image: DecorationImage(
-          image: new AssetImage(
-              'img/info.png'),
-          fit: BoxFit.none,
-        ),
+        image: new AssetImage('img/info.png'),
+        fit: BoxFit.none,
+      ),
       color: Color(0xFFC2DFE3),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
@@ -93,13 +111,13 @@ class _CameraViewState extends State<CameraView> {
       ),
     );
   }
+
   BoxDecoration myBoxDecorationPaper() {
     return BoxDecoration(
       image: DecorationImage(
-          image: new AssetImage(
-              'img/papel 1.png'),
-          fit: BoxFit.none,
-        ),
+        image: new AssetImage('img/papel_1.png'),
+        fit: BoxFit.scaleDown,
+      ),
       color: Color(0xFFA0D2DB),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
@@ -107,13 +125,13 @@ class _CameraViewState extends State<CameraView> {
       ),
     );
   }
+
   BoxDecoration myBoxDecorationWatch() {
     return BoxDecoration(
       image: DecorationImage(
-          image: new AssetImage(
-              'img/reloj 1.png'),
-          fit: BoxFit.none,
-        ),
+        image: new AssetImage('img/reloj_1.png'),
+        fit: BoxFit.scaleDown,
+      ),
       color: Color(0xFFD36582),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
@@ -121,14 +139,28 @@ class _CameraViewState extends State<CameraView> {
       ),
     );
   }
+
   BoxDecoration myBoxDecorationEye() {
     return BoxDecoration(
       image: DecorationImage(
-          image: new AssetImage(
-              'img/testigo 1.png'),
-          fit: BoxFit.none,
-        ),
+        image: new AssetImage('img/testigo_1.png'),
+        fit: BoxFit.scaleDown,
+      ),
       color: Color(0xFF6F9BB4),
+      border: Border.all(
+        color: Color(0xFF2050AC), //                   <--- border color
+        width: 5.0,
+      ),
+    );
+  }
+
+  BoxDecoration myBoxDecorationHome() {
+    return BoxDecoration(
+      image: DecorationImage(
+        image: new AssetImage('img/home.png'),
+        fit: BoxFit.scaleDown,
+      ),
+      color: Color(0xFFC2DFE3),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
         width: 5.0,
