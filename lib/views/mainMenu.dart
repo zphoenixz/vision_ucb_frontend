@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vision_ucb_frontend/views/saves.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -45,10 +46,15 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: FractionallySizedBox(
                                 widthFactor: 1.0,
                                 heightFactor: 1.0,
-                                child: Hero(
-                                  tag: 'paper',
-                                  child: Container(
-                                    decoration: myBoxDecorationPaper(),
+                                child: new InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, '/paper');
+                                  },
+                                  child: Hero(
+                                    tag: 'paper',
+                                    child: Container(
+                                      decoration: myBoxDecorationPaper(),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -57,10 +63,15 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: FractionallySizedBox(
                                 widthFactor: 1.0,
                                 heightFactor: 1.0,
-                                child: Hero(
-                                  tag: 'watch',
-                                  child: Container(
-                                    decoration: myBoxDecorationWatch(),
+                                child: new InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, '/watch');
+                                  },
+                                  child: Hero(
+                                    tag: 'watch',
+                                    child: Container(
+                                      decoration: myBoxDecorationWatch(),
+                                    ),
                                   ),
                                 ),
                               ),

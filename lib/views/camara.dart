@@ -59,7 +59,7 @@ class _CameraViewState extends State<CameraView> {
                     flex: 2,
                     child: new InkWell(
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/');
                       },
                       child: Container(
                         decoration: myBoxDecorationHome(),
@@ -70,7 +70,7 @@ class _CameraViewState extends State<CameraView> {
                     flex: 8,
                     child: new InkWell(
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/');
                       },
                       child: Hero(
                         tag: 'eye',
@@ -105,11 +105,17 @@ class _CameraViewState extends State<CameraView> {
                 children: <Widget>[
                   Flexible(
                       flex: 4,
+                      child: new InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/paper');
+                      },
                       child: Hero(
-                          tag: 'paper',
-                          child: Container(
-                            decoration: myBoxDecorationPaper(),
-                          ))),
+                        tag: 'paper',
+                        child: Container(
+                          decoration: myBoxDecorationPaper(),
+                        ),
+                      ),
+                    ),),
                   Flexible(
                     flex: 3,
                     child: new InkWell(
@@ -152,10 +158,15 @@ class _CameraViewState extends State<CameraView> {
                   ),
                   Flexible(
                     flex: 4,
-                    child: Hero(
-                      tag: 'watch',
-                      child: Container(
-                        decoration: myBoxDecorationWatch(),
+                    child: new InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/watch');
+                      },
+                      child: Hero(
+                        tag: 'watch',
+                        child: Container(
+                          decoration: myBoxDecorationWatch(),
+                        ),
                       ),
                     ),
                   ),
