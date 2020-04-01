@@ -1,9 +1,10 @@
 import 'dart:io';
-
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:image/image.dart' as img;
 
 class CameraView extends StatefulWidget {
   final CameraDescription camera;
@@ -40,6 +41,9 @@ class _CameraViewState extends State<CameraView> {
     _controller.dispose();
     super.dispose();
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -132,18 +136,31 @@ class _CameraViewState extends State<CameraView> {
                             // Store the picture in the temp directory.
                             // Find the temp directory using the `path_provider` plugin.
                             (await getTemporaryDirectory()).path,
-                            '${DateTime.now()}.png',
+                            '${DateTime.now()}.jpg',
                           );
+
+                          //TRY COMPRESS
+
 
                           // Attempt to take a picture and log where it's been saved.
                           await _controller.takePicture(path);
-
+                          //Try Compress
+                          File compressedFile = await FlutterNativeImage.compressImage(path,
+                          quality: 80,percentage: 100);
+                          /*print("Path is "+file.path);
+                          var result = await FlutterImageCompress.compressAndGetFile(
+                              file.absolute.path, path+"new.jpg",
+                              quality: 80,
+                              rotate: 180);
+                          print(file.lengthSync());
+                          print(result.lengthSync());
+                          final String path2 = result.path;*/
                           // If the picture was taken, display it on a new screen.
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  DisplayPictureScreen(imagePath: path),
+                                  DisplayPictureScreen(imagePath: compressedFile.path),
                             ),
                           );
                         } catch (e) {
@@ -194,6 +211,7 @@ class _CameraViewState extends State<CameraView> {
         image: new AssetImage('img/camera_circle.png'),
         fit: BoxFit.scaleDown,
       ),
+      //Color(0xFFC2DFE3)
       color: Color(0xFFC2DFE3),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
@@ -272,7 +290,17 @@ class DisplayPictureScreen extends StatelessWidget {
       appBar: AppBar(title: Text('Display the Picture')),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      body: Image.file(File(imagePath)),
+      body: Image.file(File(convertBN(imagePath))),
     );
   }
+
+  String convertBN(String fileName){
+    File file = File(fileName);
+    img.Image im = img.decodeImage(file.readAsBytesSync());
+    im = img.grayscale(im);
+    im = img.invert(im);
+    img.encodeJpg(im);
+    return fileName;
+  }
+
 }
