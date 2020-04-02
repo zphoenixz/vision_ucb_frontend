@@ -5,23 +5,20 @@ import 'views/camara.dart';
 import 'views/saves.dart';
 import 'views/historial.dart';
 
-Future<void> main() async {
-  // Ensure that plugin services are initialized so that `availableCameras()`
-  // can be called before `runApp()`
-  WidgetsFlutterBinding.ensureInitialized();
+void main() => runApp(MyApp());
 
-  // Obtain a list of the available cameras on the device.
-  final cameras = await availableCameras();
-
-  // Get a specific camera from the list of available cameras.
-  final firstCamera = cameras.first;
-  runApp(
-    MaterialApp(
+class MyApp extends StatelessWidget {
+  
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    WidgetsFlutterBinding.ensureInitialized();
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/': (context) => MyHomePage(),
-        '/camera': (context) => CameraView(camera: firstCamera),
+        '/camera': (context) => CameraView(),
         '/paper': (context) => SavesView(),
         '/watch': (context) => HistorialView(),
       },
@@ -29,6 +26,6 @@ Future<void> main() async {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-    )
-  );
+    );
+  }
 }
