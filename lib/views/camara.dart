@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as img;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class CameraView extends StatefulWidget {
   final CameraDescription camera;
@@ -144,7 +146,8 @@ class _CameraViewState extends State<CameraView> {
 
                           // Attempt to take a picture and log where it's been saved.
                           await _controller.takePicture(path);
-                          //Try Compress
+
+                          //**Compression ***
                           File compressedFile = await FlutterNativeImage.compressImage(path,
                           quality: 80,percentage: 100);
                           /*print("Path is "+file.path);
@@ -156,11 +159,31 @@ class _CameraViewState extends State<CameraView> {
                           print(result.lengthSync());
                           final String path2 = result.path;*/
                           // If the picture was taken, display it on a new screen.
+
+                          //Try to send to API
+                          var request = http.MultipartRequest('POST',Uri.parse('https://novispro.herokuapp.com/process/image'));
+                          request.files.add(
+                            await http.MultipartFile.fromPath(
+                              'image',compressedFile.path
+                            )
+                          );
+                          var response = await request.send();
+                          print('Return of API');
+                          print(response.statusCode);
+                          String code;
+                          response.stream.transform(utf8.decoder).listen((value){
+                            print(value);
+                            final JsonResponse = json.decode(value);
+                            ResponseAPI rapi = new ResponseAPI.fromJson(JsonResponse);
+                            print(rapi.text);
+                            code = rapi.text;
+                          });
+
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  DisplayPictureScreen(imagePath: compressedFile.path),
+                                  DisplayPictureScreen(code: code),
                             ),
                           );
                         } catch (e) {
@@ -280,17 +303,18 @@ class _CameraViewState extends State<CameraView> {
 //show Picture
 
 class DisplayPictureScreen extends StatelessWidget {
-  final String imagePath;
+  final String code;
 
-  const DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
+  const DisplayPictureScreen({Key key, this.code}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Display the Picture')),
+      appBar: AppBar(title: Text('Codigo')),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      body: Image.file(File(convertBN(imagePath))),
+      body: Text(code),
+      //body: Image.file(File(convertBN(imagePath))),
     );
   }
 
@@ -303,4 +327,21 @@ class DisplayPictureScreen extends StatelessWidget {
     return fileName;
   }
 
+}
+
+class ResponseAPI{
+  String message;
+  String text;
+
+  ResponseAPI(
+  {
+    this.message,
+    this.text
+  });
+  factory ResponseAPI.fromJson(Map<String,dynamic> parsedJson){
+    return ResponseAPI(
+      message: parsedJson['message'],
+      text: parsedJson['text']
+    );
+  }
 }
