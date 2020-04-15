@@ -1,4 +1,6 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:vision_ucb_frontend/views/camara.dart';
 import 'package:vision_ucb_frontend/views/saves.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -90,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 heightFactor: 1.0,
                 child: new InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, '/camera');
+                    _showCamera();
                   },
                   child: Hero(
                     tag: 'eye',
@@ -116,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
       color: Color(0xFFC2DFE3),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }
@@ -130,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
       color: Color(0xFFA0D2DB),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }
@@ -144,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
       color: Color(0xFFD36582),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }
@@ -158,8 +160,18 @@ class _MyHomePageState extends State<MyHomePage> {
       color: Color(0xFF6F9BB4),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
+  }
+    void _showCamera() async {
+
+    final cameras = await availableCameras();
+    final camera = cameras.first;
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CameraView(camera: camera)));
   }
 }

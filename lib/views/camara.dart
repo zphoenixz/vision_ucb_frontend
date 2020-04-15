@@ -10,8 +10,7 @@ import 'dart:convert';
 
 class CameraView extends StatefulWidget {
   final CameraDescription camera;
-
-  const CameraView({Key key, this.camera}) : super(key: key);
+  const CameraView({Key key,this.camera}) : super(key: key);
 
   @override
   _CameraViewState createState() => _CameraViewState();
@@ -30,7 +29,7 @@ class _CameraViewState extends State<CameraView> {
       // Get a specific camera from the list of available cameras.
       widget.camera,
       // Define the resolution to use.
-      ResolutionPreset.medium,
+      ResolutionPreset.veryHigh,
     );
 
     // Next, initialize the controller. This returns a Future.
@@ -223,7 +222,7 @@ class _CameraViewState extends State<CameraView> {
     return BoxDecoration(
       border: Border.all(
         color: Colors.lightBlue, //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }
@@ -238,7 +237,7 @@ class _CameraViewState extends State<CameraView> {
       color: Color(0xFFC2DFE3),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }
@@ -252,7 +251,7 @@ class _CameraViewState extends State<CameraView> {
       color: Color(0xFFA0D2DB),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }
@@ -266,7 +265,7 @@ class _CameraViewState extends State<CameraView> {
       color: Color(0xFFD36582),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }
@@ -280,7 +279,7 @@ class _CameraViewState extends State<CameraView> {
       color: Color(0xFF6F9BB4),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }
@@ -294,7 +293,7 @@ class _CameraViewState extends State<CameraView> {
       color: Color(0xFFC2DFE3),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }

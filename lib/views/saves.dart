@@ -1,19 +1,28 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
-class SavesView extends StatefulWidget {
+import 'camara.dart';
 
+class SavesView extends StatefulWidget {
   @override
   _SavesViewState createState() => _SavesViewState();
 }
 
 class _SavesViewState extends State<SavesView> {
-
   @override
   Widget build(BuildContext context) {
+    void _showCamera() async {
+      final cameras = await availableCameras();
+      final camera = cameras.first;
+
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => CameraView(camera: camera)));
+    }
+
     //get status bar height
     double statusBarHeight = MediaQuery.of(context).padding.top;
     //return Scaffold with all containers
@@ -54,24 +63,20 @@ class _SavesViewState extends State<SavesView> {
                 ],
               ),
             ),
-            Flexible(
-                flex: 18,
-                child: Container(
-                  
-                )),
+            Flexible(flex: 18, child: Container()),
             Flexible(
               flex: 3,
               child: new InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/camera');
-                      },
-                      child: Hero(
-                        tag: 'eye',
-                        child: Container(
-                          decoration: myBoxDecorationEye(),
-                        ),
-                      ),
-                    ),
+                onTap: () {
+                  _showCamera();
+                },
+                child: Hero(
+                  tag: 'eye',
+                  child: Container(
+                    decoration: myBoxDecorationEye(),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -83,7 +88,7 @@ class _SavesViewState extends State<SavesView> {
     return BoxDecoration(
       border: Border.all(
         color: Colors.lightBlue, //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }
@@ -97,7 +102,7 @@ class _SavesViewState extends State<SavesView> {
       color: Color(0xFFC2DFE3),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }
@@ -111,7 +116,7 @@ class _SavesViewState extends State<SavesView> {
       color: Color(0xFFA0D2DB),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }
@@ -125,7 +130,7 @@ class _SavesViewState extends State<SavesView> {
       color: Color(0xFFD36582),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }
@@ -139,7 +144,7 @@ class _SavesViewState extends State<SavesView> {
       color: Color(0xFF6F9BB4),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }
@@ -153,7 +158,7 @@ class _SavesViewState extends State<SavesView> {
       color: Color(0xFFC2DFE3),
       border: Border.all(
         color: Color(0xFF2050AC), //                   <--- border color
-        width: 5.0,
+        width: 2.5,
       ),
     );
   }
