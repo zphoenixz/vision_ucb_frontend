@@ -352,6 +352,5 @@ Map parser(List<Map> tokens) {
   while (current < copy.length) {
     ast['body'].add(walk());
   }
-  print(ast);
   return ast;
 }

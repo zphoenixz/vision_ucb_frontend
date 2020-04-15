@@ -17,10 +17,8 @@ List compile() {
   var compiled = [];
   try {
     var tokens = read(program);
-    print(tokens);
     var tree = parser(tokens);
     compiled = interpreter(tree);
-    print(compiled);
   } 
   catch (e) {
     if(e.toString().contains('RangeError')){

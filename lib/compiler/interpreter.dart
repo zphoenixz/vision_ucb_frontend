@@ -8,7 +8,6 @@ List interpreter(Map tree) {
   if (tree['type'] == 'program') {
     compile(tree['body']);
   }
-  print(variables);
   return output_console;
 }
 
@@ -33,7 +32,6 @@ void compile(List program) {
       forLoop(exp);
     }
   }
-  print(variables);
 }
 
 void declare(Map exp) {
