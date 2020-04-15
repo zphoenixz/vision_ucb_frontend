@@ -13,6 +13,9 @@ description: A new Flutter project.
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 1.0.0+1
 
+module:
+  androidX: true
+
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
@@ -27,6 +30,11 @@ dependencies:
   path_provider:
   path:
   petitparser:
+  image_picker:
+  flutter_image_compress: ^0.6.5+1
+  flutter_native_image: ^0.0.5
+  http: ^0.12.0+4
+
 
 dev_dependencies:
   flutter_test:
