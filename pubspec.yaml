@@ -26,6 +26,7 @@ dependencies:
   camera:
   path_provider:
   path:
+  petitparser:
 
 dev_dependencies:
   flutter_test:
