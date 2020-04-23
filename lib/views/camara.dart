@@ -7,7 +7,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as img;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:vision_ucb_frontend/compiler/juin_dart.dart';
 
 class CameraView extends StatefulWidget {
@@ -151,6 +150,8 @@ class _CameraViewState extends State<CameraView> {
                           //**Compression ***
                           File compressedFile = await FlutterNativeImage.compressImage(path,
                           quality: 80,percentage: 100);
+                          
+
                           /*print("Path is "+file.path);
                           var result = await FlutterImageCompress.compressAndGetFile(
                               file.absolute.path, path+"new.jpg",
@@ -165,7 +166,7 @@ class _CameraViewState extends State<CameraView> {
                           var request = http.MultipartRequest('POST',Uri.parse('https://novispro.herokuapp.com/process/image'));
                           request.files.add(
                             await http.MultipartFile.fromPath(
-                              'image',compressedFile.path
+                              'image',path
                             )
                           );
                           var response = await request.send();
@@ -178,7 +179,8 @@ class _CameraViewState extends State<CameraView> {
                             ResponseAPI rapi = new ResponseAPI.fromJson(JsonResponse);
                             print(rapi.text);
                             code = rapi.text;
-                            output = compile(code.split("\n"));
+                            
+                            output = compile(code.trim().split('\n'));
                           });
 
                           Navigator.push(

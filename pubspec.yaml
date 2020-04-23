@@ -34,7 +34,7 @@ dependencies:
   flutter_image_compress: ^0.6.5+1
   flutter_native_image: ^0.0.5
   http: ^0.12.0+4
-
+  gallery_saver:
 
 dev_dependencies:
   flutter_test:
