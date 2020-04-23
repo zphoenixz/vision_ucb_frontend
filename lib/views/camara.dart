@@ -8,6 +8,8 @@ import 'package:image/image.dart' as img;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:vision_ucb_frontend/compiler/juin_dart.dart';
+
 class CameraView extends StatefulWidget {
   final CameraDescription camera;
   const CameraView({Key key,this.camera}) : super(key: key);
@@ -169,20 +171,21 @@ class _CameraViewState extends State<CameraView> {
                           var response = await request.send();
                           print('Return of API');
                           print(response.statusCode);
-                          String code;
+                          String code, output;
                           response.stream.transform(utf8.decoder).listen((value){
                             print(value);
                             final JsonResponse = json.decode(value);
                             ResponseAPI rapi = new ResponseAPI.fromJson(JsonResponse);
                             print(rapi.text);
                             code = rapi.text;
+                            output = compile(code.split("\n"));
                           });
 
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  DisplayPictureScreen(code: code),
+                                  DisplayPictureScreen(code: code, result: output),
                             ),
                           );
                         } catch (e) {
@@ -303,16 +306,74 @@ class _CameraViewState extends State<CameraView> {
 
 class DisplayPictureScreen extends StatelessWidget {
   final String code;
-
-  const DisplayPictureScreen({Key key, this.code}) : super(key: key);
+  final String result;
+  const DisplayPictureScreen({Key key, this.code, this.result}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Codigo')),
+      appBar: AppBar(title: Text('Resultado Programa')),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      body: Text(code),
+      body: Column(
+
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Color.fromARGB(255, 0, 122, 193),
+            padding: EdgeInsets.only(
+              left: 20,
+              top: 20,
+              bottom: 20
+            ),
+            child: Text(
+              "Codigo",
+              textAlign: TextAlign.left,
+              style: TextStyle(color: Colors.white,fontSize: 18),
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Color.fromARGB(255, 103, 218, 255),
+            padding: EdgeInsets.only(
+              left: 20,
+              top: 20,
+            ),
+            child: Text(
+              code,
+              textAlign: TextAlign.left,
+              style: TextStyle(color: Colors.black,fontSize: 15),
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Color.fromARGB(255, 0, 122, 193),
+            padding: EdgeInsets.only(
+              left: 20,
+              top: 20,
+              bottom: 20
+            ),
+            child: Text(
+              "Salida",
+              textAlign: TextAlign.left,
+              style: TextStyle(color: Colors.white,fontSize: 18),
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Color.fromARGB(255, 103, 218, 255),
+            padding: EdgeInsets.only(
+              left: 20,
+              top: 20,
+            ),
+            child: Text(
+              result,
+              textAlign: TextAlign.left,
+              style: TextStyle(color: Colors.black,fontSize: 15),
+            ),
+          )
+        ],
+      ),
       //body: Image.file(File(convertBN(imagePath))),
     );
   }

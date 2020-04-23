@@ -13,8 +13,13 @@ List<String> program = [
   'end'
 ];
 
-List compile() {
+String compile(List<String> program) {
   var compiled = [];
+  String result = "";
+  print("Llegada despues Split");
+  for(var i in program){
+    print(i);
+  }
   try {
     var tokens = read(program);
     var tree = parser(tokens);
@@ -28,5 +33,9 @@ List compile() {
       print(e);
     }
   }
-  return compiled;
+  for(var i in compiled){
+    print(i);
+    result = result + i.toString() +"\n";
+  }
+  return result;
 }
