@@ -28,13 +28,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Flexible(
-                      child: FractionallySizedBox(
-                        widthFactor: 1.0,
-                        heightFactor: 1.0,
-                        child: Container(
-                          margin: EdgeInsets.only(top: statusBarHeight),
-                          decoration: myBoxDecorationInfo(),
+                      child: Semantics(
+                        child: FractionallySizedBox(
+                          widthFactor: 1.0,
+                          heightFactor: 1.0,
+                          child: Container(
+                            margin: EdgeInsets.only(top: statusBarHeight),
+                            decoration: myBoxDecorationInfo(),
+                          ),
                         ),
+                        label: "Información",
+                        enabled: false,
                       ),
                     ),
                     Flexible(
@@ -45,37 +49,43 @@ class _MyHomePageState extends State<MyHomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Flexible(
-                              child: FractionallySizedBox(
-                                widthFactor: 1.0,
-                                heightFactor: 1.0,
-                                child: new InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(context, '/paper');
-                                  },
-                                  child: Hero(
-                                    tag: 'paper',
-                                    child: Container(
-                                      decoration: myBoxDecorationPaper(),
+                              child: Semantics(
+                                child: FractionallySizedBox(
+                                  widthFactor: 1.0,
+                                  heightFactor: 1.0,
+                                  child: new InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(context, '/paper');
+                                    },
+                                    child: Hero(
+                                      tag: 'paper',
+                                      child: Container(
+                                        decoration: myBoxDecorationPaper(),
+                                      ),
                                     ),
                                   ),
                                 ),
+                                label: "Ingresar a programas guardados",
                               ),
                             ),
                             Flexible(
-                              child: FractionallySizedBox(
-                                widthFactor: 1.0,
-                                heightFactor: 1.0,
-                                child: new InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(context, '/watch');
-                                  },
-                                  child: Hero(
-                                    tag: 'watch',
-                                    child: Container(
-                                      decoration: myBoxDecorationWatch(),
+                              child: Semantics(
+                                child: FractionallySizedBox(
+                                  widthFactor: 1.0,
+                                  heightFactor: 1.0,
+                                  child: new InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(context, '/watch');
+                                    },
+                                    child: Hero(
+                                      tag: 'watch',
+                                      child: Container(
+                                        decoration: myBoxDecorationWatch(),
+                                      ),
                                     ),
                                   ),
                                 ),
+                                label: "Ingresar al historial",
                               ),
                             ),
                           ],
@@ -87,20 +97,23 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Flexible(
-              child: FractionallySizedBox(
-                widthFactor: 1.0,
-                heightFactor: 1.0,
-                child: new InkWell(
-                  onTap: () {
-                    _showCamera();
-                  },
-                  child: Hero(
-                    tag: 'eye',
-                    child: Container(
-                      decoration: myBoxDecorationEye(),
+              child: Semantics(
+                child: FractionallySizedBox(
+                  widthFactor: 1.0,
+                  heightFactor: 1.0,
+                  child: new InkWell(
+                    onTap: () {
+                      _showCamera();
+                    },
+                    child: Hero(
+                      tag: 'eye',
+                      child: Container(
+                        decoration: myBoxDecorationEye(),
+                      ),
                     ),
                   ),
                 ),
+                label: "Ingresar a la cámara",
               ),
             ),
           ],
@@ -164,14 +177,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-    void _showCamera() async {
 
+  void _showCamera() async {
     final cameras = await availableCameras();
     final camera = cameras.first;
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => CameraView(camera: camera)));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => CameraView(camera: camera)));
   }
 }

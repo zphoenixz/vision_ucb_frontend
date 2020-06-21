@@ -37,27 +37,30 @@ class _HistorialViewState extends State<HistorialView> {
                 children: <Widget>[
                   Flexible(
                     flex: 2,
-                    child: new InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/');
-                      },
-                      child: Container(
-                        decoration: myBoxDecorationHome(),
+                    child: Semantics(
+                      child: new InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/');
+                        },
+                        child: Container(
+                          decoration: myBoxDecorationHome(),
+                        ),
                       ),
+                      label: "Volver al menú",
                     ),
                   ),
                   Flexible(
                     flex: 8,
-                    child: new InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/');
-                      },
-                      child: Hero(
-                        tag: 'watch',
+                    child: Semantics(
+                      child: new InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/');
+                        },
                         child: Container(
                           decoration: myBoxDecorationWatch(),
                         ),
                       ),
+                      label: "Volver al menú",
                     ),
                   ),
                 ],
@@ -66,16 +69,19 @@ class _HistorialViewState extends State<HistorialView> {
             Flexible(flex: 18, child: Container()),
             Flexible(
               flex: 3,
-              child: new InkWell(
-                onTap: () {
-                  _showCamera();
-                },
-                child: Hero(
-                  tag: 'eye',
-                  child: Container(
-                    decoration: myBoxDecorationEye(),
+              child: Semantics(
+                child: new InkWell(
+                  onTap: () {
+                    _showCamera();
+                  },
+                  child: Hero(
+                    tag: 'eye',
+                    child: Container(
+                      decoration: myBoxDecorationEye(),
+                    ),
                   ),
                 ),
+                label: "Ingresar a la cámara",
               ),
             ),
           ],

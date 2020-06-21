@@ -37,27 +37,33 @@ class _SavesViewState extends State<SavesView> {
                 children: <Widget>[
                   Flexible(
                     flex: 2,
-                    child: new InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/');
-                      },
-                      child: Container(
-                        decoration: myBoxDecorationHome(),
+                    child: Semantics(
+                      child:new InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/');
+                        },
+                        child: Container(
+                          decoration: myBoxDecorationHome(),
+                        ),
                       ),
+                      label: "Volver al menú",
                     ),
                   ),
                   Flexible(
                     flex: 8,
-                    child: new InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/');
-                      },
-                      child: Hero(
-                        tag: 'paper',
-                        child: Container(
-                          decoration: myBoxDecorationPaper(),
+                    child: Semantics(
+                      child: new InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/');
+                        },
+                        child: Hero(
+                          tag: 'paper',
+                          child: Container(
+                            decoration: myBoxDecorationPaper(),
+                          ),
                         ),
                       ),
+                      label: "Volver al menú",
                     ),
                   ),
                 ],
@@ -66,16 +72,19 @@ class _SavesViewState extends State<SavesView> {
             Flexible(flex: 18, child: Container()),
             Flexible(
               flex: 3,
-              child: new InkWell(
-                onTap: () {
-                  _showCamera();
-                },
-                child: Hero(
-                  tag: 'eye',
-                  child: Container(
-                    decoration: myBoxDecorationEye(),
+              child: Semantics(
+                child: new InkWell(
+                  onTap: () {
+                    _showCamera();
+                  },
+                  child: Hero(
+                    tag: 'eye',
+                    child: Container(
+                      decoration: myBoxDecorationEye(),
+                    ),
                   ),
                 ),
+                label: "Ingresar a la cámara",
               ),
             ),
           ],
