@@ -5,6 +5,10 @@ var variables = [];
 var output_console = [];
 
 List interpreter(Map tree) {
+  if (variables.isNotEmpty && output_console.isNotEmpty) {
+    variables.clear();
+    output_console.clear();
+  }
   if (tree['type'] == 'program') {
     compile(tree['body']);
   }

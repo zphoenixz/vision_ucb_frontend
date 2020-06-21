@@ -16,7 +16,10 @@ var kw = [
 ];
 
 List<Map> read(List<String> program) {
-  var mapProgram = <Map<String, dynamic>>[];
+  print(program);
+  if(mapProgram != null){
+    mapProgram.clear();
+  }
   for (var i = 0; i < program.length; i++) {
     //print('Linea $i => ' + program[i]);
     //print(novis_tk.tokenizer((program[i]).toString(), i));

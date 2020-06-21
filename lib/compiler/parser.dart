@@ -2,6 +2,9 @@
 Map ast;
 //parser function
 Map parser(List<Map> tokens) {
+  if(ast != null){
+    ast.clear();
+  }  
   var copy = tokens;
   var current = 0;
   var token;

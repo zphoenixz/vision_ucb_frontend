@@ -37,7 +37,7 @@ String compile(List<String> program) {
   //   print(program[i].compareTo(program2[i]));
   // }
   try {
-    print(program);
+    //print(program);
     var tokens = read(program);
     var tree = parser(tokens);
     compiled = interpreter(tree);
