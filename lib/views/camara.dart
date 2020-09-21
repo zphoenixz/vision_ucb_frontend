@@ -8,6 +8,8 @@ import 'package:image/image.dart' as img;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:vision_ucb_frontend/compiler/juin_dart.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class CameraView extends StatefulWidget {
   final CameraDescription camera;
@@ -197,7 +199,7 @@ class _CameraViewState extends State<CameraView> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DisplayPictureScreen(
+                                builder: (context) => Resultado(
                                     code: code, result: output),
                               ),
                             );
@@ -318,6 +320,226 @@ class _CameraViewState extends State<CameraView> {
       ),
     );
   }
+}
+
+//Prueba TTS
+class Resultado extends StatefulWidget {
+  final String code;
+  final String result;
+  const Resultado({Key key, this.code, this.result})
+      : super(key: key);
+  @override
+  _Resultado createState() =>_Resultado();
+}
+
+enum TtsState { playing, stopped, paused, continued }
+
+class _Resultado extends State<Resultado> {
+  FlutterTts flutterTts;
+  dynamic languages;
+  String language="es-ES";
+  double volume = 1.0;
+  double pitch = 1.0;
+  double rate = 0.7;
+  String _newVoiceText;
+
+  TtsState ttsState = TtsState.stopped;
+
+  get isPlaying => ttsState == TtsState.playing;
+
+  get isStopped => ttsState == TtsState.stopped;
+
+  get isPaused => ttsState == TtsState.paused;
+
+  get isContinued => ttsState == TtsState.continued;
+
+  @override
+  initState() {
+    super.initState();
+    initTts();
+  }
+
+  initTts() {
+    flutterTts = FlutterTts();
+
+    _getLanguages();
+
+    if (!kIsWeb) {
+      if (Platform.isAndroid) {
+        _getEngines();
+      }
+    }
+
+    flutterTts.setStartHandler(() {
+      setState(() {
+        print("Playing");
+        ttsState = TtsState.playing;
+      });
+    });
+
+    flutterTts.setCompletionHandler(() {
+      setState(() {
+        print("Complete");
+        ttsState = TtsState.stopped;
+      });
+    });
+
+    flutterTts.setCancelHandler(() {
+      setState(() {
+        print("Cancel");
+        ttsState = TtsState.stopped;
+      });
+    });
+
+    if (kIsWeb || Platform.isIOS) {
+      flutterTts.setPauseHandler(() {
+        setState(() {
+          print("Paused");
+          ttsState = TtsState.paused;
+        });
+      });
+
+      flutterTts.setContinueHandler(() {
+        setState(() {
+          print("Continued");
+          ttsState = TtsState.continued;
+        });
+      });
+    }
+
+    flutterTts.setErrorHandler((msg) {
+      setState(() {
+        print("error: $msg");
+        ttsState = TtsState.stopped;
+      });
+    });
+  }
+
+  Future _getLanguages() async {
+    languages = await flutterTts.getLanguages;
+    if (languages != null) setState(() => languages);
+  }
+
+  Future _getEngines() async {
+    var engines = await flutterTts.getEngines;
+    if (engines != null) {
+      for (dynamic engine in engines) {
+        print(engine);
+      }
+    }
+  }
+
+  Future _speak() async {
+    await flutterTts.setVolume(volume);
+    await flutterTts.setSpeechRate(rate);
+    await flutterTts.setPitch(pitch);
+    await flutterTts.setLanguage(language);
+    setState(() {
+      _newVoiceText = "Codigo"+'\n'+widget.code+'\n'+"Salida"+'\n'+widget.result;
+    });
+    if (_newVoiceText != null) {
+      if (_newVoiceText.isNotEmpty) {
+        var result = await flutterTts.speak(_newVoiceText);
+        if (result == 1) setState(() => ttsState = TtsState.playing);
+      }
+    }
+  }
+
+  Future _stop() async {
+    var result = await flutterTts.stop();
+    if (result == 1) setState(() => ttsState = TtsState.stopped);
+  }
+
+  Future _pause() async {
+    var result = await flutterTts.pause();
+    if (result == 1) setState(() => ttsState = TtsState.paused);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+          title: Text('Resultado Programa'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.play_arrow,
+                color: Colors.white,
+              ),
+              onPressed: _speak,
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.pause,
+                color: Colors.white,
+              ),
+              onPressed: _pause,
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.stop,
+                color: Colors.white,
+              ),
+              onPressed: _stop,
+            )
+          ],
+      ),
+      // The image is stored as a file on the device. Use the `Image.file`
+      // constructor with the given path to display the image.
+      body: Column(
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Color.fromARGB(255, 0, 122, 193),
+            padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
+            child: Text(
+              "Codigo",
+              textAlign: TextAlign.left,
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Color.fromARGB(255, 103, 218, 255),
+            padding: EdgeInsets.only(
+              left: 20,
+              top: 20,
+            ),
+            child: Text(
+              widget.code,
+              textAlign: TextAlign.left,
+              style: TextStyle(color: Colors.black, fontSize: 15),
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Color.fromARGB(255, 0, 122, 193),
+            padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
+            child: Text(
+              "Salida",
+              textAlign: TextAlign.left,
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Color.fromARGB(255, 103, 218, 255),
+            padding: EdgeInsets.only(
+              left: 20,
+              top: 20,
+            ),
+            child: Text(
+              widget.result,
+              textAlign: TextAlign.left,
+              style: TextStyle(color: Colors.black, fontSize: 15),
+            ),
+          )
+        ],
+      ),
+      //body: Image.file(File(convertBN(imagePath))),
+    );
+  }
+
 }
 
 //show Picture
