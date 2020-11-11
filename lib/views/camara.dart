@@ -339,7 +339,7 @@ class _Resultado extends State<Resultado> {
   dynamic languages;
   String language="es-ES";
   double volume = 1.0;
-  double pitch = 1.0;
+  double pitch = 1.0  ;
   double rate = 0.7;
   String _newVoiceText;
 
